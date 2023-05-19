@@ -25,6 +25,7 @@
     <modules>
         <module>bootstrap</module>
         <module>common</module>
+        <module>sdk</module>
     </modules>
 
     <dependencies>

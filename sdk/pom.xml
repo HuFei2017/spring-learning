@@ -8,11 +8,16 @@
         <version>0.0.1</version>
     </parent>
     <artifactId>sdk</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>sdk</name>
     <description>sdk</description>
 
     <dependencies>
+        <dependency>
+            <groupId>com.learning</groupId>
+            <artifactId>common</artifactId>
+            <version>0.0.1</version>
+        </dependency>
     </dependencies>
 
 </project>
