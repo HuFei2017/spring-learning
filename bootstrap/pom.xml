@@ -13,6 +13,11 @@
     <description>Bootstrap</description>
 
     <dependencies>
+        <dependency>
+            <groupId>com.learning</groupId>
+            <artifactId>common</artifactId>
+            <version>0.0.1</version>
+        </dependency>
     </dependencies>
 
     <build>

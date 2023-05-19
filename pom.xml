@@ -24,6 +24,7 @@
 
     <modules>
         <module>bootstrap</module>
+        <module>common</module>
     </modules>
 
     <dependencies>
