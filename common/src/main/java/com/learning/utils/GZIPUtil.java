@@ -1,5 +1,8 @@
 package com.learning.utils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.zip.GZIPInputStream;
@@ -14,6 +17,7 @@ import java.util.zip.GZIPOutputStream;
  */
 public class GZIPUtil {
 
+    private static final Logger log = LoggerFactory.getLogger(GZIPUtil.class);
     private static final String GZIP_ENCODE_UTF_8 = "UTF-8";
 
     public static byte[] compress(String str, String encoding) {
@@ -27,7 +31,7 @@ public class GZIPUtil {
             gzip.write(str.getBytes(encoding));
             gzip.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         }
         return out.toByteArray();
     }
@@ -50,7 +54,7 @@ public class GZIPUtil {
             }
             return out.toByteArray();
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         }
         return null;
     }
@@ -69,7 +73,7 @@ public class GZIPUtil {
             }
             return out.toString(encoding);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         }
         return null;
     }

@@ -1,8 +1,5 @@
 package com.learning.utils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -13,8 +10,6 @@ import java.nio.charset.StandardCharsets;
  * @Version 1.0
  */
 public class ByteUtil {
-
-    private static final Logger log = LoggerFactory.getLogger(ByteUtil.class);
 
     //将byte[]转换成int
     public static int getByteConvertInt(byte[] bytes) {

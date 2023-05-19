@@ -1,8 +1,5 @@
 package com.learning.utils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -16,8 +13,6 @@ import java.time.format.DateTimeFormatter;
  * @Version 1.0
  */
 public class TimeUtil {
-
-    private static final Logger log = LoggerFactory.getLogger(TimeUtil.class);
 
     /**
      * @Description 非标准时间字符串转换
