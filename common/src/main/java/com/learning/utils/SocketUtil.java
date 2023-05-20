@@ -1,5 +1,6 @@
 package com.learning.utils;
 
+import com.learning.exception.MyException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,7 +44,7 @@ public class SocketUtil {
             }
         } catch (Exception ex) {
             log.error(ex.getMessage(), ex);
-            throw new RuntimeException(address + ":" + port + ", TCP通讯出现错误");
+            throw new MyException(address + ":" + port + ", TCP通讯出现错误");
         } finally {
             AutoCloseUtil.close(br);
             AutoCloseUtil.close(is);

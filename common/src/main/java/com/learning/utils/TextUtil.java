@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /**
@@ -183,27 +182,5 @@ public class TextUtil {
         }
 
         return null;
-    }
-
-    /**
-     * @Description 文本Base64加密
-     * @Param [str] 加密前内容
-     * @Return java.lang.String 加密后内容
-     * @Author hufei
-     * @Date 2020/8/19 11:17
-     */
-    public static String fromBase64(String str) {
-        return Base64.getUrlEncoder().encodeToString(str.getBytes(StandardCharsets.UTF_8)).replace('-', '+').replace('_', '/');
-    }
-
-    /**
-     * @Description 文本Base64解密
-     * @Param [base64Str] 解密前内容
-     * @Return java.lang.String 解密后内容
-     * @Author hufei
-     * @Date 2020/8/19 11:17
-     */
-    public static String parseBase64(String base64Str) {
-        return new String(Base64.getDecoder().decode(base64Str.replaceAll("[^A-Za-z0-9+/=]", "+")), StandardCharsets.UTF_8);
     }
 }

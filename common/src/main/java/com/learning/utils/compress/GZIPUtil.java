@@ -1,4 +1,4 @@
-package com.learning.utils;
+package com.learning.utils.compress;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

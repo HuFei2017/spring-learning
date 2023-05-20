@@ -22,6 +22,16 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
+        <!--IO公共包-->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+        </dependency>
+        <!--Lzma解压缩包-->
+        <dependency>
+            <groupId>com.github.jponge</groupId>
+            <artifactId>lzma-java</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
