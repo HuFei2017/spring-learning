@@ -23,6 +23,11 @@
             <artifactId>sdk</artifactId>
             <version>0.0.1</version>
         </dependency>
+        <dependency>
+            <groupId>com.learning.example</groupId>
+            <artifactId>jframe</artifactId>
+            <version>0.0.1</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -30,6 +30,7 @@
         <module>bootstrap</module>
         <module>common</module>
         <module>sdk</module>
+        <module>example</module>
     </modules>
 
     <dependencies>
