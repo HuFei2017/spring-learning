@@ -120,17 +120,11 @@ public class SingleTreeSelector extends EnumComponent {
         return this;
     }
 
-    /**
-     * 接口要求返回类型为 {@link com.ronds.phm.business.deviceModel.dto.ComponentTree}
-     */
     public SingleTreeSelector withEnumItemOutsideWithGet(String url, String keyName, String valueName) {
         super.appendEnumItemOutsideWithGet(url, keyName, valueName, false, false, true);
         return this;
     }
 
-    /**
-     * 接口要求返回类型为 {@link com.ronds.phm.business.deviceModel.dto.ComponentTree}
-     */
     public SingleTreeSelector withEnumItemOutsideWithPost(String url, Object body, String keyName, String valueName, String[] watch) {
         super.appendEnumItemOutsideWithPost(url, body, keyName, valueName, watch, false, false, true);
         return this;

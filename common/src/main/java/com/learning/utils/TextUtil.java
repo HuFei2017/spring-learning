@@ -158,7 +158,7 @@ public class TextUtil {
 
     private static Object getJsonNodeValue(JsonNode node) {
 
-        if (null == node || node.isEmpty()) {
+        if (null == node || node.isNull()) {
             return null;
         }
 

@@ -1,4 +1,4 @@
-package com.learning.layoutsdk.definition;
+package com.learning.layoutsdk.component.definition;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

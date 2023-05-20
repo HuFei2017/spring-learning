@@ -3,7 +3,7 @@ package com.learning.layoutsdk.component;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.learning.layoutsdk.definition.JsonProviderMetaType;
+import com.learning.layoutsdk.component.definition.JsonProviderMetaType;
 import lombok.Data;
 
 import java.util.HashMap;

@@ -130,17 +130,11 @@ public class MultiGroupSelector extends EnumComponent {
         return this;
     }
 
-    /**
-     * 接口要求返回类型为 {@link com.ronds.phm.business.deviceModel.dto.ComponentGroupTree}
-     */
     public MultiGroupSelector withEnumItemOutsideWithGet(String url, String keyName, String valueName) {
         super.appendEnumItemOutsideWithGet(url, keyName, valueName, false, true, false);
         return this;
     }
 
-    /**
-     * 接口要求返回类型为 {@link com.ronds.phm.business.deviceModel.dto.ComponentGroupTree}
-     */
     public MultiGroupSelector withEnumItemOutsideWithPost(String url, Object body, String keyName, String valueName, String[] watch) {
         super.appendEnumItemOutsideWithPost(url, body, keyName, valueName, watch, false, true, false);
         return this;

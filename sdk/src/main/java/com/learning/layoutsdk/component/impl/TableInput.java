@@ -2,8 +2,8 @@ package com.learning.layoutsdk.component.impl;
 
 import com.learning.layoutsdk.component.ArrayComponent;
 import com.learning.layoutsdk.component.LayoutComponent;
+import com.learning.layoutsdk.component.definition.JsonProviderMetaType;
 import com.learning.layoutsdk.component.tool.LayoutComponentTool;
-import com.learning.layoutsdk.definition.JsonProviderMetaType;
 
 import java.util.HashMap;
 import java.util.Map;

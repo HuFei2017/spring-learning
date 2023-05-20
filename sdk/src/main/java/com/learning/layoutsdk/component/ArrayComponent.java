@@ -1,7 +1,7 @@
 package com.learning.layoutsdk.component;
 
 import com.learning.layoutsdk.component.annotation.LayoutMethodTag;
-import com.learning.layoutsdk.definition.JsonProviderMetaType;
+import com.learning.layoutsdk.component.definition.JsonProviderMetaType;
 import com.learning.layoutsdk.enums.RuleDict;
 import com.learning.layoutsdk.enums.TypeDict;
 import org.springframework.util.Assert;

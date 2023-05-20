@@ -1,4 +1,4 @@
-package com.learning.layoutsdk.definition;
+package com.learning.layoutsdk.component.definition;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;

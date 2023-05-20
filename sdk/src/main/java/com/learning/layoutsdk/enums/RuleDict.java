@@ -9,7 +9,7 @@ package com.learning.layoutsdk.enums;
  */
 public enum RuleDict {
 
-    Form("Rule.Form", "com.ronds.schema.default.Rule.Form");
+    Form("Rule.Form", "com.learning.schema.default.Rule.Form");
 
     private final String id;
 
