@@ -31,6 +31,7 @@
         <module>common</module>
         <module>sdk</module>
         <module>example</module>
+        <module>spring-security</module>
     </modules>
 
     <dependencies>
