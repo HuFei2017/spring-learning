@@ -17,6 +17,7 @@
 
     <modules>
         <module>jframe</module>
+        <module>jni</module>
     </modules>
 
     <dependencies>

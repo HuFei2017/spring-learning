@@ -24,6 +24,7 @@
         <commons-io.version>2.12.0</commons-io.version>
         <lzma.version>1.3</lzma.version>
         <protobuf.version>3.23.1</protobuf.version>
+        <jna.version>5.13.0</jna.version>
     </properties>
 
     <modules>
@@ -93,6 +94,17 @@
                 <groupId>com.google.protobuf</groupId>
                 <artifactId>protobuf-java</artifactId>
                 <version>${protobuf.version}</version>
+            </dependency>
+            <!--jni依赖包-->
+            <dependency>
+                <groupId>net.java.dev.jna</groupId>
+                <artifactId>jna</artifactId>
+                <version>${jna.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.java.dev.jna</groupId>
+                <artifactId>jna-platform</artifactId>
+                <version>${jna.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
