@@ -146,6 +146,16 @@ public class MultiCheckbox extends EnumComponent {
         return this;
     }
 
+    public MultiCheckbox withDefaultEnumItem(String... val) {
+        super.appendDefaultEnumItem(val);
+        return this;
+    }
+
+    public MultiCheckbox withBatchDefaultEnumItem(String val) {
+        super.batchAppendDefaultEnumItem(val);
+        return this;
+    }
+
     public MultiCheckbox withEnumItemOutsideWithGet(String url, String keyName, String valueName) {
         super.appendEnumItemOutsideWithGet(url, keyName, valueName, false, false, false);
         return this;

@@ -130,6 +130,16 @@ public class SingleSelector extends EnumComponent {
         return this;
     }
 
+    public SingleSelector withDefaultEnumItem(String... val) {
+        super.appendDefaultEnumItem(val);
+        return this;
+    }
+
+    public SingleSelector withBatchDefaultEnumItem(String val) {
+        super.batchAppendDefaultEnumItem(val);
+        return this;
+    }
+
     public SingleSelector withEnumItemOutsideWithGet(String url, String keyName, String valueName) {
         super.appendEnumItemOutsideWithGet(url, keyName, valueName, false, false, false);
         return this;

@@ -25,6 +25,8 @@
         <lzma.version>1.3</lzma.version>
         <protobuf.version>3.23.1</protobuf.version>
         <jna.version>5.13.0</jna.version>
+        <jetcache.version>2.7.3</jetcache.version>
+        <minio.version>8.5.3</minio.version>
     </properties>
 
     <modules>
@@ -105,6 +107,18 @@
                 <groupId>net.java.dev.jna</groupId>
                 <artifactId>jna-platform</artifactId>
                 <version>${jna.version}</version>
+            </dependency>
+            <!--jetcache缓存 -->
+            <dependency>
+                <groupId>com.alicp.jetcache</groupId>
+                <artifactId>jetcache-starter-redis</artifactId>
+                <version>${jetcache.version}</version>
+            </dependency>
+            <!-- minio依赖 -->
+            <dependency>
+                <groupId>io.minio</groupId>
+                <artifactId>minio</artifactId>
+                <version>${minio.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

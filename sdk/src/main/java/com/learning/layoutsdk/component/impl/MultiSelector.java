@@ -145,6 +145,16 @@ public class MultiSelector extends EnumComponent {
         return this;
     }
 
+    public MultiSelector withDefaultEnumItem(String... val) {
+        super.appendDefaultEnumItem(val);
+        return this;
+    }
+
+    public MultiSelector withBatchDefaultEnumItem(String val) {
+        super.batchAppendDefaultEnumItem(val);
+        return this;
+    }
+
     public MultiSelector withEnumItemOutsideWithGet(String url, String keyName, String valueName) {
         super.appendEnumItemOutsideWithGet(url, keyName, valueName, false, false, false);
         return this;

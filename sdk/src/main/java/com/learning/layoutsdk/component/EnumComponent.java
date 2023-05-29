@@ -58,6 +58,8 @@ public abstract class EnumComponent implements LayoutComponent {
     private boolean showValue = false;
     private HttpConfig httpConfig = null;
     private LinkedHashMap<String, Object> values = new LinkedHashMap<>();
+    private LinkedHashMap<String, Object> defaultValues = new LinkedHashMap<>();
+    private LinkedHashMap<String, Object> defaultKeyValues = new LinkedHashMap<>();
     private Map<String, Object[]> paramMap = new HashMap<>();
 
     @LayoutMethodTag
@@ -115,8 +117,31 @@ public abstract class EnumComponent implements LayoutComponent {
         paramMap.put("batchAppendEnumItem", new Object[]{TextUtil.fromJson(values)});
     }
 
+    @LayoutMethodTag
+    public void appendDefaultEnumItem(String... val) {
+        for (String item : val) {
+            defaultValues.put(item, item);
+        }
+        paramMap.put("batchAppendDefaultEnumItem", new Object[]{TextUtil.fromJson(defaultValues)});
+    }
+
+    @LayoutMethodTag
+    public void batchAppendDefaultEnumItem(String val) {
+        LinkedHashMap value = TextUtil.parseJson(val, LinkedHashMap.class);
+        if (null != value) {
+            for (Object name : value.keySet()) {
+                defaultKeyValues.put(name.toString(), value.get(name));
+            }
+        }
+        paramMap.put("batchAppendDefaultEnumItem", new Object[]{TextUtil.fromJson(defaultKeyValues)});
+    }
+
     public LinkedHashMap<String, Object> getValues() {
         return values;
+    }
+
+    public LinkedHashMap<String, Object> getDefaultValues() {
+        return defaultValues.isEmpty() ? defaultKeyValues : defaultValues;
     }
 
     @LayoutMethodTag

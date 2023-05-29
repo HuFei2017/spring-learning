@@ -131,6 +131,16 @@ public class SingleRadio extends EnumComponent {
         return this;
     }
 
+    public SingleRadio withDefaultEnumItem(String... val) {
+        super.appendDefaultEnumItem(val);
+        return this;
+    }
+
+    public SingleRadio withBatchDefaultEnumItem(String val) {
+        super.batchAppendDefaultEnumItem(val);
+        return this;
+    }
+
     public SingleRadio withEnumItemOutsideWithGet(String url, String keyName, String valueName) {
         super.appendEnumItemOutsideWithGet(url, keyName, valueName, false, false, false);
         return this;
