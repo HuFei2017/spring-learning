@@ -38,6 +38,9 @@ public interface Storage {
     void safeDeleteFile(List<String> relativePaths) throws Exception;
 
     // 上传文件
+    String uploadFile(String prefix, MultipartFile file) throws Exception;
+
+    // 上传文件
     List<String> uploadFiles(String prefix, MultipartFile[] files) throws Exception;
 
     // 下载文件
@@ -49,6 +52,16 @@ public interface Storage {
     // 移动文件
     void moveFile(String relativePath1, String relativePath2) throws Exception;
 
-    // 解压文件
+    // 压缩文件夹, 文件夹必须以 "/" 结尾
+    InputStream zip(String relativePath, boolean retain) throws Exception;
+
+    // 解压文件, 文件必须以 ".zip" 结尾, 解压后压缩包内文件与压缩包所在路径同级
     void unzip(String relativePath, boolean retain) throws Exception;
+
+    // 备份文件夹
+    void backup(String relativePath, boolean retain) throws Exception;
+
+    // 还原文件夹
+    void rollback(String relativePath, boolean retain) throws Exception;
+
 }

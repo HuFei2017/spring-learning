@@ -3,6 +3,7 @@ package com.learning.storage.service;
 import java.io.*;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LocalStorage extends AbstractStorage {
@@ -95,6 +96,23 @@ public class LocalStorage extends AbstractStorage {
                 Files.deleteIfExists(Path.of(fullPath));
             }
         }
+    }
+
+    @Override
+    public List<String> doListSubFile(String relativePath) throws Exception {
+        String fullPath = getFullPath(relativePath);
+        if (!Files.isDirectory(Path.of(fullPath))) {
+            return new ArrayList<>();
+        }
+        List<String> list = new ArrayList<>();
+        Files.list(Path.of(fullPath)).forEach(path -> {
+            String filePath = relativePath + path.getFileName().toString();
+            if (Files.isDirectory(path)) {
+                filePath += "/";
+            }
+            list.add(filePath);
+        });
+        return list;
     }
 
     private String getFullPath(String relativePath) {

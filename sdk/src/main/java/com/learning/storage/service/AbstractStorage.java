@@ -1,7 +1,10 @@
 package com.learning.storage.service;
 
+import com.learning.utils.CollectionUtil;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
@@ -10,10 +13,15 @@ import java.nio.file.FileAlreadyExistsException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
+import java.util.stream.Collectors;
+import java.util.zip.*;
 
 public abstract class AbstractStorage implements Storage {
+
+    @Override
+    public String uploadFile(String prefix, MultipartFile file) throws Exception {
+        return uploadFiles(prefix, new MultipartFile[]{file}).get(0);
+    }
 
     @Override
     public List<String> uploadFiles(String prefix, MultipartFile[] files) throws Exception {
@@ -142,26 +150,142 @@ public abstract class AbstractStorage implements Storage {
     }
 
     @Override
+    public InputStream zip(String relativePath, boolean retain) throws Exception {
+        if (!relativePath.endsWith("/")) {
+            throw new UnsupportedOperationException("only directory can be zipped");
+        }
+        if (!relativePath.startsWith("/")) {
+            relativePath = "/" + relativePath;
+        }
+        if (!existFile(relativePath)) {
+            throw new FileNotFoundException("file not exist");
+        }
+        int index = relativePath.length();
+        byte[] bytes;
+        try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
+            try (CheckedOutputStream cos = new CheckedOutputStream(bos, new CRC32());
+                 ZipOutputStream zos = new ZipOutputStream(cos, Charset.forName("GBK"))) {
+                doZip(index, Collections.singletonList(relativePath), zos);
+            }
+            // 在 ZipOutputStream 流关闭之后才能获取到正确的数据
+            bytes = bos.toByteArray();
+        }
+        if (!retain) {
+            safeDeleteFile(Collections.singletonList(relativePath));
+        }
+        return new ByteArrayInputStream(bytes);
+    }
+
+    private void doZip(int index, List<String> paths, ZipOutputStream zos) throws Exception {
+
+        List<String> dirPaths = new ArrayList<>();
+        List<String> filePaths = new ArrayList<>();
+
+        for (String path : paths) {
+            if (path.endsWith("/")) {
+                dirPaths.add(path);
+            } else {
+                filePaths.add(path);
+            }
+        }
+
+        // 文件
+        for (String path : filePaths) {
+            String zipPath = path.substring(index);
+            zos.putNextEntry(new ZipEntry(zipPath));
+            int len;
+            byte[] buf = new byte[4096];
+            try (InputStream stream = getFileStream(path)) {
+                while ((len = stream.read(buf)) != -1) {
+                    zos.write(buf, 0, len);
+                }
+                zos.closeEntry();
+            }
+        }
+
+        // 目录
+        for (String path : dirPaths) {
+            doZip(index, doListSubFile(path), zos);
+        }
+    }
+
+    @Override
     public void unzip(String relativePath, boolean retain) throws Exception {
         if (!relativePath.endsWith(".zip")) {
             throw new UnsupportedOperationException("invalid file format");
         }
-        String relativeDir = relativePath.startsWith("/") ? relativePath.substring(0, relativePath.lastIndexOf("/")) : "";
+        String relativeDir;
+        if (relativePath.contains("/")) {
+            relativeDir = (relativePath.startsWith("/") ? "" : "/") + relativePath.substring(0, relativePath.lastIndexOf("/"));
+        } else {
+            relativeDir = "";
+        }
         try (
                 InputStream fileInputStream = getFileStream(relativePath);
                 ZipInputStream zipInputStream = new ZipInputStream(fileInputStream, Charset.forName("GBK"))) {
             ZipEntry entry;
             while ((entry = zipInputStream.getNextEntry()) != null) {
-                String filePath = relativeDir + "/" + entry.getName();
-                if (!existFile(filePath)) {
-                    createFile(filePath);
+                if (!entry.isDirectory()) {
+                    String filePath = relativeDir + "/" + entry.getName();
+                    if (!existFile(filePath)) {
+                        createFile(filePath);
+                    }
+                    writeFile(filePath, zipInputStream, false, false);
                 }
-                writeFile(filePath, zipInputStream, false, false);
                 zipInputStream.closeEntry();
             }
         }
         if (!retain) {
             deleteFile(Collections.singletonList(relativePath));
+        }
+    }
+
+    @Override
+    public void backup(String relativePath, boolean retain) throws Exception {
+        if (!relativePath.endsWith("/")) {
+            throw new UnsupportedOperationException("only directory can backup");
+        }
+        if (!relativePath.startsWith("/")) {
+            relativePath = "/" + relativePath;
+        }
+        if (!existFile(relativePath)) {
+            throw new FileNotFoundException("file not exist");
+        }
+        if (relativePath.equals("/")) {
+            safeDeleteFile(Collections.singletonList("/bak/"));
+        }
+        String targetPath = "/bak/bak" + CollectionUtil.join(relativePath.split("/"), "_") + ".zip";
+        InputStream stream = zip(relativePath, true);
+        if (!existFile(targetPath)) {
+            createFile(targetPath);
+        }
+        writeFile(targetPath, stream, false);
+    }
+
+    @Override
+    public void rollback(String relativePath, boolean retain) throws Exception {
+        if (!relativePath.endsWith("/")) {
+            throw new UnsupportedOperationException("only directory can rollback");
+        }
+        if (!relativePath.startsWith("/")) {
+            relativePath = "/" + relativePath;
+        }
+        String sourcePath = "/bak/bak" + CollectionUtil.join(relativePath.split("/"), "_") + ".zip";
+        if (!existFile(sourcePath)) {
+            throw new FileNotFoundException("no backup file found");
+        }
+        if (relativePath.equals("/")) {
+            List<String> subPaths = doListSubFile("/").stream()
+                    .filter(x -> !x.equals("/bak/")).collect(Collectors.toList());
+            safeDeleteFile(subPaths);
+        } else {
+            safeDeleteFile(Collections.singletonList(relativePath));
+        }
+        String targetPath = relativePath + sourcePath.substring(5);
+        copyFile(sourcePath, targetPath);
+        unzip(targetPath, false);
+        if (!retain) {
+            safeDeleteFile(Collections.singletonList(sourcePath));
         }
     }
 
@@ -178,4 +302,6 @@ public abstract class AbstractStorage implements Storage {
     abstract public InputStream doGetFileStream(String relativePath) throws Exception;
 
     abstract public void doSafeDeleteFile(List<String> relativePaths) throws Exception;
+
+    abstract public List<String> doListSubFile(String relativePath) throws Exception;
 }

@@ -174,6 +174,29 @@ public class RemoteStorage extends LocalStorage {
         }
     }
 
+    @Override
+    public List<String> doListSubFile(String relativePath) throws Exception {
+        if (!bucketOn) {
+            checkBucket();
+        }
+        List<String> list = new ArrayList<>();
+        String fullPath = getFullPath(relativePath);
+        if (fullPath.endsWith("/")) {
+            Iterable<Result<Item>> results = client.listObjects(
+                    ListObjectsArgs.builder()
+                            .bucket(BUCKET_NAME)
+                            .prefix(fullPath)
+                            .build()
+            );
+            int refIndex = getFullPath("/").length() + relativePath.length() - 1;
+            for (Result<Item> result : results) {
+                String name = result.get().objectName().substring(refIndex);
+                list.add(relativePath + name);
+            }
+        }
+        return list;
+    }
+
     private List<String> listDir(String dir) throws Exception {
         List<String> list = new ArrayList<>();
         if (dir.endsWith("/")) {

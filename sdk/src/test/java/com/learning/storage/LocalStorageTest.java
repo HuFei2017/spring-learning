@@ -9,6 +9,8 @@ import org.springframework.util.Assert;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Collections;
 import java.util.List;
 
@@ -45,5 +47,33 @@ class LocalStorageTest {
         storage.unzip(zipName, false);
         storage.deleteFile(Collections.singletonList("/"));
         Assert.isTrue(!storage.existFile(zipName), "");
+    }
+
+    @Test
+    void localStorageZipTest() throws Exception {
+
+        // mock config
+        StorageLocalConfig localConfig = new StorageLocalConfig();
+        localConfig.setRoot("/mytest");
+        StorageConfig config = new StorageConfig();
+        config.setLocal(localConfig);
+
+        // mock autowired
+        StorageService storageManager = new StorageService(config);
+
+        // test
+        Storage storage = storageManager.build("A");
+
+        InputStream stream = new FileInputStream("/test.zip");
+        String zipName = "abc.zip";
+        storage.safeDeleteFile(Collections.singletonList("/"));
+        storage.createFile(zipName);
+        storage.writeFile(zipName, stream, false);
+        storage.unzip(zipName, false);
+        InputStream zipStream = storage.zip("/", true);
+        Files.createFile(Path.of("/mytest/A/abc.zip"));
+        byte[] bytes = zipStream.readAllBytes();
+        Files.write(Path.of("/mytest/A/abc.zip"), bytes);
+        zipStream.close();
     }
 }

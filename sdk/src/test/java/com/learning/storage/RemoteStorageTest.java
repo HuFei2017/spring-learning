@@ -49,4 +49,32 @@ class RemoteStorageTest {
         storage.deleteFile(Collections.singletonList("/"));
         Assert.isTrue(!storage.existFile(zipName), "");
     }
+
+    @Test
+    void remoteStorageZipTest() throws Exception {
+
+        // mock config
+        StorageRemoteConfig remoteConfig = new StorageRemoteConfig();
+        remoteConfig.setEndpoint("http://127.0.0.1:9006/");
+        remoteConfig.setAccessKey("minio");
+        remoteConfig.setSecretKey("minio");
+        StorageConfig config = new StorageConfig();
+        config.setRemote(remoteConfig);
+
+        // mock autowired
+        StorageService storageManager = new StorageService(config);
+
+        // test
+        Storage storage = storageManager.build("A");
+
+        InputStream stream = new FileInputStream("/test.zip");
+        String zipName = "abc.zip";
+        storage.safeDeleteFile(Collections.singletonList("/"));
+        storage.createFile(zipName);
+        storage.writeFile(zipName, stream, false);
+        storage.unzip(zipName, false);
+        InputStream zipStream = storage.zip("/", true);
+        storage.createFile(zipName);
+        storage.writeFile(zipName, zipStream, false);
+    }
 }
