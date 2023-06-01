@@ -220,8 +220,25 @@ public abstract class AbstractStorage implements Storage {
         } else {
             relativeDir = "";
         }
+        unzip(relativeDir, getFileStream(relativePath));
+        if (!retain) {
+            deleteFile(Collections.singletonList(relativePath));
+        }
+    }
+
+    @Override
+    public void unzip(String relativeDir, InputStream stream) throws Exception {
+
+        if (null == relativeDir || relativeDir.isEmpty()) {
+            relativeDir = "";
+        } else if (!relativeDir.startsWith("/")) {
+            relativeDir = "/" + relativeDir;
+        } else if (relativeDir.endsWith("/")) {
+            relativeDir = relativeDir.substring(0, relativeDir.length() - 1);
+        }
+
         try (
-                InputStream fileInputStream = getFileStream(relativePath);
+                InputStream fileInputStream = stream;
                 ZipInputStream zipInputStream = new ZipInputStream(fileInputStream, Charset.forName("GBK"))) {
             ZipEntry entry;
             while ((entry = zipInputStream.getNextEntry()) != null) {
@@ -234,9 +251,6 @@ public abstract class AbstractStorage implements Storage {
                 }
                 zipInputStream.closeEntry();
             }
-        }
-        if (!retain) {
-            deleteFile(Collections.singletonList(relativePath));
         }
     }
 

@@ -58,6 +58,9 @@ public interface Storage {
     // 解压文件, 文件必须以 ".zip" 结尾, 解压后压缩包内文件与压缩包所在路径同级
     void unzip(String relativePath, boolean retain) throws Exception;
 
+    // 解压文件
+    void unzip(String relativeDir, InputStream stream) throws Exception;
+
     // 备份文件夹
     void backup(String relativePath, String version, boolean retain) throws Exception;
 
