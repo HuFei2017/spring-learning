@@ -52,6 +52,10 @@ public class StorageService {
         return null == client ? new LocalStorage(getRootDir(), modelName) : new RemoteStorage(client, modelName);
     }
 
+    public Storage build(boolean local, String... modelName) {
+        return local ? new LocalStorage(getRootDir(), modelName) : build(modelName);
+    }
+
     private String getRootDir() {
         if (null == config || null == config.getLocal() || null == config.getLocal().getRoot() || config.getLocal().getRoot().isEmpty()) {
             return "";

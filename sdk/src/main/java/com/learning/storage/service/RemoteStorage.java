@@ -32,6 +32,9 @@ public class RemoteStorage extends LocalStorage {
         if (!bucketOn) {
             checkBucket();
         }
+        if (relativePath.endsWith("/")) {
+            return true;
+        }
         try {
             client.statObject(
                     StatObjectArgs.builder()

@@ -255,7 +255,7 @@ public abstract class AbstractStorage implements Storage {
             safeDeleteFile(Collections.singletonList("/bak/"));
         }
         String targetPath = "/bak/bak" + CollectionUtil.join(relativePath.split("/"), "_") + ".zip";
-        InputStream stream = zip(relativePath, true);
+        InputStream stream = zip(relativePath, retain);
         if (!existFile(targetPath)) {
             createFile(targetPath);
         }

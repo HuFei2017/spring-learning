@@ -76,4 +76,40 @@ class LocalStorageTest {
         Files.write(Path.of("/mytest/A/abc.zip"), bytes);
         zipStream.close();
     }
+
+    @Test
+    void backupAndRollbackTest() throws Exception {
+
+        // mock config
+        StorageLocalConfig localConfig = new StorageLocalConfig();
+        localConfig.setRoot("/mytest");
+        StorageConfig config = new StorageConfig();
+        config.setLocal(localConfig);
+
+        // mock autowired
+        StorageService storageManager = new StorageService(config);
+
+        // test
+        Storage storage = storageManager.build("A");
+
+        // prepare data
+        InputStream stream = new FileInputStream("/test.zip");
+        String zipName = "abc.zip";
+        storage.safeDeleteFile(Collections.singletonList("/"));
+        storage.createFile(zipName);
+        storage.writeFile(zipName, stream, false);
+        storage.unzip(zipName, false);
+
+        // backup all dir
+        storage.backup("/", true);
+
+        // rollback all dir
+        storage.rollback("/", false);
+
+        // backup special dir
+        storage.backup("/config/", true);
+
+        // rollback special dir
+        storage.rollback("/config/", false);
+    }
 }

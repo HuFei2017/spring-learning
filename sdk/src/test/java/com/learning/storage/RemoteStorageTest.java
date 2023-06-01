@@ -77,4 +77,42 @@ class RemoteStorageTest {
         storage.createFile(zipName);
         storage.writeFile(zipName, zipStream, false);
     }
+
+    @Test
+    void backupAndRollbackTest() throws Exception {
+
+        // mock config
+        StorageRemoteConfig remoteConfig = new StorageRemoteConfig();
+        remoteConfig.setEndpoint("http://127.0.0.1:9006/");
+        remoteConfig.setAccessKey("minio");
+        remoteConfig.setSecretKey("minio");
+        StorageConfig config = new StorageConfig();
+        config.setRemote(remoteConfig);
+
+        // mock autowired
+        StorageService storageManager = new StorageService(config);
+
+        // test
+        Storage storage = storageManager.build("A");
+
+        // prepare data
+        InputStream stream = new FileInputStream("/test.zip");
+        String zipName = "abc.zip";
+        storage.safeDeleteFile(Collections.singletonList("/"));
+        storage.createFile(zipName);
+        storage.writeFile(zipName, stream, false);
+        storage.unzip(zipName, false);
+
+        // backup all dir
+        storage.backup("/", true);
+
+        // rollback all dir
+        storage.rollback("/", false);
+
+        // backup special dir
+        storage.backup("/config/", true);
+
+        // rollback special dir
+        storage.rollback("/config/", false);
+    }
 }
