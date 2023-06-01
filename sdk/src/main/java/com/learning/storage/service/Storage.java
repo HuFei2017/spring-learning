@@ -59,9 +59,11 @@ public interface Storage {
     void unzip(String relativePath, boolean retain) throws Exception;
 
     // 备份文件夹
-    void backup(String relativePath, boolean retain) throws Exception;
+    void backup(String relativePath, String version, boolean retain) throws Exception;
 
     // 还原文件夹
-    void rollback(String relativePath, boolean retain) throws Exception;
+    void rollback(String relativePath, String version, boolean retain) throws Exception;
 
+    // 清除文件夹, 和 delete 不同的是, 会同时清除备份记录
+    void clean(String relativePath) throws Exception;
 }

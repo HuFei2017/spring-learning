@@ -241,7 +241,7 @@ public abstract class AbstractStorage implements Storage {
     }
 
     @Override
-    public void backup(String relativePath, boolean retain) throws Exception {
+    public void backup(String relativePath, String version, boolean retain) throws Exception {
         if (!relativePath.endsWith("/")) {
             throw new UnsupportedOperationException("only directory can backup");
         }
@@ -254,7 +254,7 @@ public abstract class AbstractStorage implements Storage {
         if (relativePath.equals("/")) {
             safeDeleteFile(Collections.singletonList("/bak/"));
         }
-        String targetPath = "/bak/bak" + CollectionUtil.join(relativePath.split("/"), "_") + ".zip";
+        String targetPath = getBackupFilePath(relativePath, version);
         InputStream stream = zip(relativePath, retain);
         if (!existFile(targetPath)) {
             createFile(targetPath);
@@ -263,14 +263,14 @@ public abstract class AbstractStorage implements Storage {
     }
 
     @Override
-    public void rollback(String relativePath, boolean retain) throws Exception {
+    public void rollback(String relativePath, String version, boolean retain) throws Exception {
         if (!relativePath.endsWith("/")) {
             throw new UnsupportedOperationException("only directory can rollback");
         }
         if (!relativePath.startsWith("/")) {
             relativePath = "/" + relativePath;
         }
-        String sourcePath = "/bak/bak" + CollectionUtil.join(relativePath.split("/"), "_") + ".zip";
+        String sourcePath = getBackupFilePath(relativePath, version);
         if (!existFile(sourcePath)) {
             throw new FileNotFoundException("no backup file found");
         }
@@ -287,6 +287,43 @@ public abstract class AbstractStorage implements Storage {
         if (!retain) {
             safeDeleteFile(Collections.singletonList(sourcePath));
         }
+    }
+
+    @Override
+    public void clean(String relativePath) throws Exception {
+        if (!relativePath.startsWith("/")) {
+            relativePath = "/" + relativePath;
+        }
+        if (!existFile(relativePath)) {
+            throw new FileNotFoundException("file not exist");
+        }
+        if (relativePath.equals("/")) {
+            // 备份以外的目录全部删除
+            List<String> subPaths1 = doListSubFile("/").stream()
+                    .filter(x -> !x.equals("/bak/")).collect(Collectors.toList());
+            safeDeleteFile(subPaths1);
+            // 删除备份文件
+            String regex = "/bak/bak(_V\\w+)?\\.zip";
+            List<String> subPaths2 = doListSubFile("/bak/").stream()
+                    .filter(x -> x.matches(regex)).collect(Collectors.toList());
+            safeDeleteFile(subPaths2);
+        } else {
+            // 删除文件夹
+            safeDeleteFile(Collections.singletonList(relativePath));
+            // 删除备份文件
+            String regex = "/bak/bak" + getRelativePathStr(relativePath) + "(_V\\w+)?\\.zip";
+            List<String> subPaths2 = doListSubFile("/bak/").stream()
+                    .filter(x -> x.matches(regex)).collect(Collectors.toList());
+            safeDeleteFile(subPaths2);
+        }
+    }
+
+    private String getRelativePathStr(String relativePath) {
+        return CollectionUtil.join(relativePath.split("/"), "_");
+    }
+
+    private String getBackupFilePath(String relativePath, String version) {
+        return "/bak/bak" + getRelativePathStr(relativePath) + (null == version || version.isEmpty() ? "" : ("_V" + version)) + ".zip";
     }
 
     abstract public void doCreateFile(String relativePath) throws Exception;

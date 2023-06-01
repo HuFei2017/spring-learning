@@ -101,15 +101,26 @@ class LocalStorageTest {
         storage.unzip(zipName, false);
 
         // backup all dir
-        storage.backup("/", true);
+        storage.backup("/", "", true);
 
         // rollback all dir
-        storage.rollback("/", false);
+        storage.rollback("/", "", true);
 
         // backup special dir
-        storage.backup("/config/", true);
+        storage.backup("/config/", "", true);
 
         // rollback special dir
-        storage.rollback("/config/", false);
+        storage.rollback("/config/", "", true);
+
+        // backup special dir
+        storage.backup("/files/files/", "", true);
+
+        // rollback special dir
+        storage.rollback("/files/files/", "", true);
+
+        // clean all
+        storage.clean("/config/");
+        storage.clean("/files/files/");
+        storage.clean("/");
     }
 }
