@@ -316,20 +316,15 @@ public abstract class AbstractStorage implements Storage {
             List<String> subPaths1 = doListSubFile("/").stream()
                     .filter(x -> !x.equals("/bak/")).collect(Collectors.toList());
             safeDeleteFile(subPaths1);
-            // 删除备份文件
-            String regex = "/bak/bak(_V\\w+)?\\.zip";
-            List<String> subPaths2 = doListSubFile("/bak/").stream()
-                    .filter(x -> x.matches(regex)).collect(Collectors.toList());
-            safeDeleteFile(subPaths2);
         } else {
             // 删除文件夹
             safeDeleteFile(Collections.singletonList(relativePath));
-            // 删除备份文件
-            String regex = "/bak/bak" + getRelativePathStr(relativePath) + "(_V\\w+)?\\.zip";
-            List<String> subPaths2 = doListSubFile("/bak/").stream()
-                    .filter(x -> x.matches(regex)).collect(Collectors.toList());
-            safeDeleteFile(subPaths2);
         }
+        // 删除备份文件
+        String regex = "/bak/bak" + getRelativePathStr(relativePath) + "(_V[\\w-]+)?\\.zip";
+        List<String> subPaths2 = doListSubFile("/bak/").stream()
+                .filter(x -> x.matches(regex)).collect(Collectors.toList());
+        safeDeleteFile(subPaths2);
     }
 
     private String getRelativePathStr(String relativePath) {
