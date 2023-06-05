@@ -115,6 +115,13 @@ public class MultiGroupSelector extends EnumComponent {
         return this;
     }
 
+    @Override
+    public MultiGroupSelector withDisableCondition(String disableCondition) {
+        config.setDisableCondition(disableCondition);
+        paramMap.put("withDisableCondition", new Object[]{disableCondition});
+        return this;
+    }
+
     public MultiGroupSelector withMaxSelectCount(int max) {
         super.setMaxSelectCount(max);
         return this;

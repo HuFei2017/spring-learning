@@ -116,6 +116,13 @@ public class MultiCheckbox extends EnumComponent {
         return this;
     }
 
+    @Override
+    public MultiCheckbox withDisableCondition(String disableCondition) {
+        config.setDisableCondition(disableCondition);
+        paramMap.put("withDisableCondition", new Object[]{disableCondition});
+        return this;
+    }
+
     public MultiCheckbox withMaxSelectCount(int max) {
         super.setMaxSelectCount(max);
         return this;

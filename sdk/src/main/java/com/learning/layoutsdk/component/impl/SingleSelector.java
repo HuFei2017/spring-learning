@@ -115,6 +115,13 @@ public class SingleSelector extends EnumComponent {
         return this;
     }
 
+    @Override
+    public SingleSelector withDisableCondition(String disableCondition) {
+        config.setDisableCondition(disableCondition);
+        paramMap.put("withDisableCondition", new Object[]{disableCondition});
+        return this;
+    }
+
     public SingleSelector withEnumItem(String... val) {
         super.appendEnumItem(val);
         return this;

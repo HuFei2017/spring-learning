@@ -120,6 +120,13 @@ public class SingleTreeSelector extends EnumComponent {
         return this;
     }
 
+    @Override
+    public SingleTreeSelector withDisableCondition(String disableCondition) {
+        config.setDisableCondition(disableCondition);
+        paramMap.put("withDisableCondition", new Object[]{disableCondition});
+        return this;
+    }
+
     public SingleTreeSelector withEnumItemOutsideWithGet(String url, String keyName, String valueName) {
         super.appendEnumItemOutsideWithGet(url, keyName, valueName, false, false, true);
         return this;

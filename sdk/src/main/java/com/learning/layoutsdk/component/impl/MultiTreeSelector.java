@@ -115,6 +115,13 @@ public class MultiTreeSelector extends EnumComponent {
         return this;
     }
 
+    @Override
+    public MultiTreeSelector withDisableCondition(String disableCondition) {
+        config.setDisableCondition(disableCondition);
+        paramMap.put("withDisableCondition", new Object[]{disableCondition});
+        return this;
+    }
+
     public MultiTreeSelector withMaxSelectCount(int max) {
         super.setMaxSelectCount(max);
         return this;

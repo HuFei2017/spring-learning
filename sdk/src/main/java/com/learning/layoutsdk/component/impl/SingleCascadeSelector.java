@@ -115,6 +115,13 @@ public class SingleCascadeSelector extends EnumComponent {
         return this;
     }
 
+    @Override
+    public SingleCascadeSelector withDisableCondition(String disableCondition) {
+        config.setDisableCondition(disableCondition);
+        paramMap.put("withDisableCondition", new Object[]{disableCondition});
+        return this;
+    }
+
     public SingleCascadeSelector withEnumItemOutsideWithGet(String url, String keyName, String valueName) {
         super.appendEnumItemOutsideWithGet(url, keyName, valueName, true, false, false);
         return this;

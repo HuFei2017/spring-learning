@@ -115,6 +115,13 @@ public class MultiCascadeSelector extends EnumComponent {
         return this;
     }
 
+    @Override
+    public MultiCascadeSelector withDisableCondition(String disableCondition) {
+        config.setDisableCondition(disableCondition);
+        paramMap.put("withDisableCondition", new Object[]{disableCondition});
+        return this;
+    }
+
     public MultiCascadeSelector withMaxSelectCount(int max) {
         super.setMaxSelectCount(max);
         return this;

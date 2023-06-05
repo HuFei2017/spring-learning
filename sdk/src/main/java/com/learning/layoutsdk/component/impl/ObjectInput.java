@@ -120,6 +120,13 @@ public class ObjectInput extends ObjectComponent {
         return this;
     }
 
+    @Override
+    public ObjectInput withDisableCondition(String disableCondition) {
+        config.setDisableCondition(disableCondition);
+        paramMap.put("withDisableCondition", new Object[]{disableCondition});
+        return this;
+    }
+
     @Deprecated
     public ObjectInput withObjectType(JsonProviderMetaType type) {
         this.objType = type;

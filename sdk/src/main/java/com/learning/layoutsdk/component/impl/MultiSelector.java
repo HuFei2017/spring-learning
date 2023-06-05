@@ -115,6 +115,13 @@ public class MultiSelector extends EnumComponent {
         return this;
     }
 
+    @Override
+    public MultiSelector withDisableCondition(String disableCondition) {
+        config.setDisableCondition(disableCondition);
+        paramMap.put("withDisableCondition", new Object[]{disableCondition});
+        return this;
+    }
+
     public MultiSelector withMaxSelectCount(int max) {
         super.setMaxSelectCount(max);
         return this;

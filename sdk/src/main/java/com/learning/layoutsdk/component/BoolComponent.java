@@ -1,7 +1,6 @@
 package com.learning.layoutsdk.component;
 
 import com.learning.layoutsdk.component.definition.JsonProviderMetaType;
-import com.learning.layoutsdk.enums.RuleDict;
 import com.learning.layoutsdk.enums.TypeDict;
 
 /**
@@ -11,21 +10,15 @@ import com.learning.layoutsdk.enums.TypeDict;
  * @Date 2023/2/17 10:41
  * @Version 1.0
  */
-public abstract class BoolComponent implements LayoutComponent {
+public abstract class BoolComponent extends AbstractLayoutComponent {
 
     @Override
     public JsonProviderMetaType toSchema() {
 
-        JsonProviderMetaType field = new JsonProviderMetaType();
-        field.setId(RuleDict.Form.getId());
-        field.setType(TypeDict.Ref.getName());
-        field.setRefId(RuleDict.Form.getName());
-        field.setValue(toConfigSchema());
-
         JsonProviderMetaType type = new JsonProviderMetaType();
         type.setId(getId());
         type.setType(TypeDict.Bool.getName());
-        type.setFields(new JsonProviderMetaType[]{field});
+        type.setFields(new JsonProviderMetaType[]{generateField()});
 
         return type;
     }

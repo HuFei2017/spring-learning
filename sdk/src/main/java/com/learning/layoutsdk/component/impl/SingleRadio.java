@@ -116,6 +116,13 @@ public class SingleRadio extends EnumComponent {
         return this;
     }
 
+    @Override
+    public SingleRadio withDisableCondition(String disableCondition) {
+        config.setDisableCondition(disableCondition);
+        paramMap.put("withDisableCondition", new Object[]{disableCondition});
+        return this;
+    }
+
     public SingleRadio withEnumItem(String... val) {
         super.appendEnumItem(val);
         return this;

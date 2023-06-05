@@ -128,6 +128,13 @@ public class DateInput extends TextComponent {
         return this;
     }
 
+    @Override
+    public DateInput withDisableCondition(String disableCondition) {
+        config.setDisableCondition(disableCondition);
+        paramMap.put("withDisableCondition", new Object[]{disableCondition});
+        return this;
+    }
+
     public DateInput withExpScript(String expScript) {
         super.setExpScript(expScript);
         return this;

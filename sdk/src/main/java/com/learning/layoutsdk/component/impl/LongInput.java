@@ -128,6 +128,13 @@ public class LongInput extends NumberComponent {
         return this;
     }
 
+    @Override
+    public LongInput withDisableCondition(String disableCondition) {
+        config.setDisableCondition(disableCondition);
+        paramMap.put("withDisableCondition", new Object[]{disableCondition});
+        return this;
+    }
+
     public LongInput withExpScript(String expScript) {
         super.setExpScript(expScript);
         return this;

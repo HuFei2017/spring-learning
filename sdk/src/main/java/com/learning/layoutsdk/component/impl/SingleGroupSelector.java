@@ -115,6 +115,13 @@ public class SingleGroupSelector extends EnumComponent {
         return this;
     }
 
+    @Override
+    public SingleGroupSelector withDisableCondition(String disableCondition) {
+        config.setDisableCondition(disableCondition);
+        paramMap.put("withDisableCondition", new Object[]{disableCondition});
+        return this;
+    }
+
     public SingleGroupSelector withEnumItemOutsideWithGet(String url, String keyName, String valueName) {
         super.appendEnumItemOutsideWithGet(url, keyName, valueName, false, true, false);
         return this;

@@ -21,7 +21,7 @@ import java.util.*;
  * @Date 2023/2/17 10:41
  * @Version 1.0
  */
-public abstract class EnumComponent implements LayoutComponent {
+public abstract class EnumComponent extends AbstractLayoutComponent {
 
     @Data
     private static class KVEntity {

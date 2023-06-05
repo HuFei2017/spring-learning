@@ -43,6 +43,8 @@ public interface LayoutComponent {
         private String showCondition;
         @JsonIgnore
         private String hiddenCondition;
+        @JsonIgnore
+        private String disableCondition;
 
         public static LayoutCommonConfig init() {
             LayoutCommonConfig config = new LayoutCommonConfig();
@@ -60,6 +62,9 @@ public interface LayoutComponent {
             }
             if (null != notRequireCondition) {
                 depend.put("notRequire", notRequireCondition);
+            }
+            if (null != disableCondition) {
+                depend.put("disabled", disableCondition);
             }
             return depend.isEmpty() ? null : depend;
         }
@@ -102,6 +107,8 @@ public interface LayoutComponent {
     LayoutComponent withShowCondition(String showCondition);
 
     LayoutComponent withHiddenCondition(String hiddenCondition);
+
+    LayoutComponent withDisableCondition(String disableCondition);
 
     LayoutComponent copy();
 }

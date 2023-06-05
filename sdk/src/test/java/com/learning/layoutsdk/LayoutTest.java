@@ -42,6 +42,7 @@ class LayoutTest {
                 .withComponent(new MultiCascadeSelector().withId("multicascade").withName("多选级联").withEnumItemOutsideWithGet("/business-web/devcase/point/list?path=SampleSet:41:_id=45&hasMeasdef=true", "value", "label"))
                 .withComponent(new SingleRadio().withId("radio").withName("单选按钮").withEnumItem("A", "B"))
                 .withComponent(new MultiCheckbox().withId("checkbox").withName("多选框").withEnumItem("A", "B"))
+                .withComponent(new NumberRangeInput().withId("numberrange").withName("数字范围").withDefaultValue(1, 2).withMinKeyName("start").withMaxKeyName("end").withUnit("rpm", "Hz"))
                 .build();
         System.out.println(layout.toString());
     }

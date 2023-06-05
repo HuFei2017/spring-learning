@@ -129,6 +129,13 @@ public class TextareaInput extends TextComponent {
         return this;
     }
 
+    @Override
+    public TextareaInput withDisableCondition(String disableCondition) {
+        config.setDisableCondition(disableCondition);
+        paramMap.put("withDisableCondition", new Object[]{disableCondition});
+        return this;
+    }
+
     public TextareaInput withHeight(int height) {
         Assert.isTrue(height > 0, "please set valid height value");
         this.height = height;

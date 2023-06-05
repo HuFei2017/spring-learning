@@ -120,6 +120,13 @@ public class TableInput extends ArrayComponent {
         return this;
     }
 
+    @Override
+    public TableInput withDisableCondition(String disableCondition) {
+        config.setDisableCondition(disableCondition);
+        paramMap.put("withDisableCondition", new Object[]{disableCondition});
+        return this;
+    }
+
     public TableInput withTitleHidden() {
         this.hiddenTitle = true;
         paramMap.put("withTitleHidden", new Object[0]);

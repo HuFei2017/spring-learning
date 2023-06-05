@@ -116,6 +116,13 @@ public class FileInput extends TextComponent {
     }
 
     @Override
+    public FileInput withDisableCondition(String disableCondition) {
+        config.setDisableCondition(disableCondition);
+        paramMap.put("withDisableCondition", new Object[]{disableCondition});
+        return this;
+    }
+
+    @Override
     public String getId() {
         return config.getId();
     }

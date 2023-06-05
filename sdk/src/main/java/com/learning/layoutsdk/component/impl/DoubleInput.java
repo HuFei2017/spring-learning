@@ -128,6 +128,13 @@ public class DoubleInput extends NumberComponent {
         return this;
     }
 
+    @Override
+    public DoubleInput withDisableCondition(String disableCondition) {
+        config.setDisableCondition(disableCondition);
+        paramMap.put("withDisableCondition", new Object[]{disableCondition});
+        return this;
+    }
+
     public DoubleInput withExpScript(String expScript) {
         super.setExpScript(expScript);
         return this;

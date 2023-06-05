@@ -2,13 +2,12 @@ package com.learning.layoutsdk.component;
 
 import com.learning.layoutsdk.component.annotation.LayoutMethodTag;
 import com.learning.layoutsdk.component.definition.JsonProviderMetaType;
-import com.learning.layoutsdk.enums.RuleDict;
 import com.learning.layoutsdk.enums.TypeDict;
 import lombok.Data;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @InterfaceName NumberComponent
@@ -17,7 +16,7 @@ import java.util.Map;
  * @Date 2023/2/17 10:41
  * @Version 1.0
  */
-public abstract class TextComponent implements LayoutComponent {
+public abstract class TextComponent extends AbstractLayoutComponent {
 
     @Data
     private static class ExpConfig {
@@ -44,30 +43,27 @@ public abstract class TextComponent implements LayoutComponent {
         return paramMap;
     }
 
-    public Map<String, Object> parseFieldValue() {
+    protected Map<String, Object> parseFieldUnitValue(String[] units, String defaultUnit) {
         Map<String, Object> val = new HashMap<>();
-        if (null != expConfig.getExpScript() && null != expConfig.getExpMsg()) {
-            Map<String, String> exp = new HashMap<>();
-            exp.put("regExp", expConfig.getExpScript());
-            exp.put("message", expConfig.getExpMsg());
-            val.put("rules", Collections.singletonList(exp));
+        if (null != units) {
+            val.put("defaultValue", Optional.ofNullable(defaultUnit).orElse(units[0]));
+            val.put("value", units);
+            val.put("key", "unit");
         }
         return val;
+    }
+
+    public Map<String, Object> parseFieldValue() {
+        return generateRegexRuleList(expConfig.getExpScript(), expConfig.getExpMsg());
     }
 
     @Override
     public JsonProviderMetaType toSchema() {
 
-        JsonProviderMetaType field = new JsonProviderMetaType();
-        field.setId(RuleDict.Form.getId());
-        field.setType(TypeDict.Ref.getName());
-        field.setRefId(RuleDict.Form.getName());
-        field.setValue(toConfigSchema());
-
         JsonProviderMetaType type = new JsonProviderMetaType();
         type.setId(getId());
         type.setType(TypeDict.Text.getName());
-        type.setFields(new JsonProviderMetaType[]{field});
+        type.setFields(new JsonProviderMetaType[]{generateField()});
 
         return type;
     }

@@ -118,6 +118,13 @@ public class ListInput extends ArrayComponent {
         return this;
     }
 
+    @Override
+    public ListInput withDisableCondition(String disableCondition) {
+        config.setDisableCondition(disableCondition);
+        paramMap.put("withDisableCondition", new Object[]{disableCondition});
+        return this;
+    }
+
     public ListInput withTitleHidden() {
         this.hiddenTitle = true;
         paramMap.put("withTitleHidden", new Object[0]);

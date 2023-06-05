@@ -2,7 +2,6 @@ package com.learning.layoutsdk.component;
 
 import com.learning.layoutsdk.component.annotation.LayoutMethodTag;
 import com.learning.layoutsdk.component.definition.JsonProviderMetaType;
-import com.learning.layoutsdk.enums.RuleDict;
 import com.learning.layoutsdk.enums.TypeDict;
 import org.springframework.util.Assert;
 
@@ -15,7 +14,7 @@ import java.util.*;
  * @Date 2023/2/17 10:41
  * @Version 1.0
  */
-public abstract class ArrayComponent implements LayoutComponent {
+public abstract class ArrayComponent extends AbstractLayoutComponent {
 
     private JsonProviderMetaType subType = null;
     private Map<String, Object[]> paramMap = new HashMap<>();
@@ -65,27 +64,11 @@ public abstract class ArrayComponent implements LayoutComponent {
 
     @Override
     public List<JsonProviderMetaType> obtainExtraTypeList() {
-        if (null != subType && TypeDict.Struct.getName().equals(subType.getType())) {
-            List<JsonProviderMetaType> types = new ArrayList<>();
-            JsonProviderMetaType[] currentTypes = subType.getTypes();
-            if (null != currentTypes) {
-                subType.setTypes(null);
-                types.addAll(new ArrayList<>(Arrays.asList(currentTypes)));
-            }
-            types.add(subType);
-            return types;
-        }
-        return null;
+        return generateExtraTypeList(subType);
     }
 
     @Override
     public JsonProviderMetaType toSchema() {
-
-        JsonProviderMetaType field = new JsonProviderMetaType();
-        field.setId(RuleDict.Form.getId());
-        field.setType(TypeDict.Ref.getName());
-        field.setRefId(RuleDict.Form.getName());
-        field.setValue(toConfigSchema());
 
         JsonProviderMetaType items = new JsonProviderMetaType();
         Assert.notNull(subType, "array item type can not be null");
@@ -104,7 +87,7 @@ public abstract class ArrayComponent implements LayoutComponent {
         type.setId(getId());
         type.setType(TypeDict.Array.getName());
         type.setItems(items);
-        type.setFields(new JsonProviderMetaType[]{field});
+        type.setFields(new JsonProviderMetaType[]{generateField()});
 
         return type;
     }

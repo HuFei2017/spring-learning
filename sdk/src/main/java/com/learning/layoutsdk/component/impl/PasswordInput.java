@@ -121,6 +121,13 @@ public class PasswordInput extends TextComponent {
         return this;
     }
 
+    @Override
+    public PasswordInput withDisableCondition(String disableCondition) {
+        config.setDisableCondition(disableCondition);
+        paramMap.put("withDisableCondition", new Object[]{disableCondition});
+        return this;
+    }
+
     public PasswordInput withExpScript(String expScript) {
         super.setExpScript(expScript);
         return this;
