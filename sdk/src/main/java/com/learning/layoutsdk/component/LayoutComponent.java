@@ -33,10 +33,10 @@ public interface LayoutComponent {
         private String help;
         private String tooltip;
         private String placeholder;
-        private boolean require;
-        private boolean disabled;
-        private boolean hidden;
-        private boolean br;
+        private Boolean require;
+        private Boolean disabled;
+        private Boolean hidden;
+        private Boolean br;
         @JsonIgnore
         private String notRequireCondition;
         @JsonIgnore
