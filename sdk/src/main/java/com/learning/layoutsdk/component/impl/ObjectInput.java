@@ -155,7 +155,7 @@ public class ObjectInput extends ObjectComponent {
         return this;
     }
 
-    public ObjectInput withProperties(LayoutComponent... components) {
+    public ObjectInput withProperties(List<LayoutComponent> components) {
         for (LayoutComponent component : components) {
             withProperty(component);
         }
