@@ -19,6 +19,7 @@ public class ObjectInput extends ObjectComponent {
 
     private Map<String, Object[]> paramMap;
     private LayoutCommonConfig config;
+    private List<LayoutComponent> propertyTemp;
     private JsonProviderMetaType objType = null;
     private List<JsonProviderMetaType> properties = null;
     private List<JsonProviderMetaType> types = null;
@@ -26,6 +27,7 @@ public class ObjectInput extends ObjectComponent {
     public ObjectInput() {
         config = LayoutCommonConfig.init();
         paramMap = new HashMap<>();
+        propertyTemp = new ArrayList<>();
     }
 
     @Override
@@ -148,7 +150,15 @@ public class ObjectInput extends ObjectComponent {
             types.addAll(extraTypeList);
         }
 
-        paramMap.put("withProperty", new Object[]{component});
+        propertyTemp.add(component);
+        paramMap.put("withProperties", new Object[]{propertyTemp});
+        return this;
+    }
+
+    public ObjectInput withProperties(LayoutComponent... components) {
+        for (LayoutComponent component : components) {
+            withProperty(component);
+        }
         return this;
     }
 
