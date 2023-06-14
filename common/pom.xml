@@ -32,6 +32,11 @@
             <groupId>com.github.jponge</groupId>
             <artifactId>lzma-java</artifactId>
         </dependency>
+        <!--图片压缩-->
+        <dependency>
+            <groupId>net.coobird</groupId>
+            <artifactId>thumbnailator</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

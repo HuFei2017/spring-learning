@@ -27,6 +27,7 @@
         <jna.version>5.13.0</jna.version>
         <jetcache.version>2.7.3</jetcache.version>
         <minio.version>8.5.3</minio.version>
+        <thumbnailator.version>0.4.19</thumbnailator.version>
     </properties>
 
     <modules>
@@ -119,6 +120,12 @@
                 <groupId>io.minio</groupId>
                 <artifactId>minio</artifactId>
                 <version>${minio.version}</version>
+            </dependency>
+            <!--图片压缩-->
+            <dependency>
+                <groupId>net.coobird</groupId>
+                <artifactId>thumbnailator</artifactId>
+                <version>${thumbnailator.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
