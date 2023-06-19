@@ -37,6 +37,11 @@
             <groupId>net.coobird</groupId>
             <artifactId>thumbnailator</artifactId>
         </dependency>
+        <!--远程ssh依赖-->
+        <dependency>
+            <groupId>com.jcraft</groupId>
+            <artifactId>jsch</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
