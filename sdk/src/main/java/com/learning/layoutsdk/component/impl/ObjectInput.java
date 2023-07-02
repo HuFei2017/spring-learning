@@ -21,6 +21,7 @@ public class ObjectInput extends ObjectComponent {
     private LayoutCommonConfig config;
     private List<LayoutComponent> propertyTemp;
     private boolean hiddenTitle = false;
+    private boolean hiddenBorder = false;
     private JsonProviderMetaType objType = null;
     private List<JsonProviderMetaType> properties = null;
     private List<JsonProviderMetaType> types = null;
@@ -136,6 +137,12 @@ public class ObjectInput extends ObjectComponent {
         return this;
     }
 
+    public ObjectInput withBorderHidden() {
+        this.hiddenBorder = true;
+        paramMap.put("withBorderHidden", new Object[0]);
+        return this;
+    }
+
     @Deprecated
     public ObjectInput withObjectType(JsonProviderMetaType type) {
         this.objType = type;
@@ -198,6 +205,7 @@ public class ObjectInput extends ObjectComponent {
     public Map toConfigSchema() {
         Map<String, Object> refVal = new HashMap<>();
         refVal.put("titleHidden", hiddenTitle);
+        refVal.put("borderHidden", hiddenBorder);
         Map<String, Object> val = new HashMap<>();
         val.put("common", config);
         val.put("ref", refVal);
