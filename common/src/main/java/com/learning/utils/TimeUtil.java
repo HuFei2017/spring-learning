@@ -2,7 +2,7 @@ package com.learning.utils;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -88,7 +88,7 @@ public class TimeUtil {
      * @Date 2020/5/6 15:32
      */
     public static String getCurrentTime() {
-        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        return LocalDateTime.now().atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
     /**
@@ -99,7 +99,7 @@ public class TimeUtil {
      * @Date 2020/5/6 15:32
      */
     public static String getTimeStr(long timestamp) {
-        return Instant.ofEpochMilli(timestamp).atZone(ZoneOffset.ofHours(8)).toLocalDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        return Instant.ofEpochMilli(timestamp).atZone(ZoneId.systemDefault()).toLocalDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
     /**
@@ -113,6 +113,6 @@ public class TimeUtil {
         return LocalDateTime.parse(
                 formatTimeStr(time),
                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-        ).toInstant(ZoneOffset.ofHours(8)).toEpochMilli();
+        ).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
     }
 }
