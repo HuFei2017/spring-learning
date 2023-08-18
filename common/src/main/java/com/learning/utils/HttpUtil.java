@@ -219,7 +219,7 @@ public class HttpUtil {
      * @Date 2020/9/17 8:48
      */
     public static boolean telnet(String address, int port) {
-        return telnet(address, port, 0);
+        return telnet(address, port, 500);
     }
 
     /**
